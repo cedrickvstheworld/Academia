@@ -1,0 +1,200 @@
+.body{
+    background-color: whitesmoke;
+}
+
+.navlanding{
+    background-color: rgba(0, 0, 0, 0.64);
+}
+
+.navlogin{
+    background-color: #1c1c1c;
+}
+
+.top-bg{
+    padding-top: 80px;
+    background-image: url("../websitephotos/bg5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 750px;
+}
+
+
+.title-block{
+    align-content: center;
+    padding-top: 230px;
+}
+
+
+.text-title{
+    font-size: 50px;
+    font-family: Chandas;
+}
+
+.text-violet{
+    color: #d283d3;
+}
+
+.border-white{
+    border-style: solid;
+    border-color: whitesmoke;
+    border-width: 2px;
+}
+
+.bg-blur{
+    width: auto;
+    /*margin-left: 12%;*/
+    /*margin-right: 12%;*/
+    background-color: rgba(0, 0, 0, 0.53);
+}
+
+.text-orange{
+    color: #ff692d;
+}
+
+
+.text-yellow{
+    color: yellow;
+}
+
+.text-blue{
+    color: #113bb1;
+}
+
+.text-red{
+    color: #ff5c1d;
+}
+
+.text-scarlet{
+    color: red;
+}
+
+.text-blue{
+    color: #3d8696;
+}
+
+.text-black-custom{
+    color: #a0a0a0;
+}
+
+.block-two{
+    padding-top: 70px;
+}
+
+.block-three{
+    padding-top: 50px;
+}
+
+.block-four{
+    padding-top: 50px;
+}
+
+
+.footer{
+    background-color: #1c1c1c;
+    margin-top: 60px;
+}
+
+.footer-content{
+    padding-top: 20px;
+}
+
+.profile-img{
+    width: 190px;
+    height: 190px;
+}
+
+th, td {
+    white-space: nowrap;
+}
+
+.list-div{
+    height: 450px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+
+.input-length-md{
+    width: 250px;
+}
+
+.bg-black{
+    background: black;
+}
+
+
+
+.awesome-team{
+    text-align: center;
+}
+
+.team-header{
+    font-family: "Comic Sans MS";
+}
+
+
+.my-handsome-self-img{
+    width: 230px;
+    height: 280px;
+}
+
+.circular--square {
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
+}
+
+
+/*Cookie Consent Begin*/
+#cookieConsent {
+    background-color: rgba(20,20,20,0.8);
+    min-height: 26px;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 26px;
+    padding: 8px 0 8px 30px;
+    font-family: "Trebuchet MS",Helvetica,sans-serif;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 9999;
+}
+#cookieConsent a {
+    color: #4B8EE7;
+    text-decoration: none;
+}
+#closeCookieConsent {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    margin: -15px 0 0 0;
+    font-weight: bold;
+}
+#closeCookieConsent:hover {
+    color: #FFF;
+}
+#cookieConsent a.cookieConsentOK {
+    background-color: orange;
+    color: #000;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0 20px;
+    cursor: pointer;
+    float: right;
+    margin: 0 60px 0 10px;
+}
+#cookieConsent a.cookieConsentOK:hover {
+    background-color: #e0a223;
+}
+/*Cookie Consent End*/
+
+
+.class_lists{
+    height: 300px;
+    overflow-y: auto;
+}

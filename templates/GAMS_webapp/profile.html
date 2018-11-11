@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-sm-12">
+        {% if user_profile.profile_photo == null or user_profile.profile_photo == '' %}
+            {% if user_profile.gender == 'male' %}
+                <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/boyprofile.png' %}">
+            {% else %}
+                <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/girlprofile.png' %}">
+            {% endif %}
+        {% else %}
+            <img class="profile-img img-rounded" src="{{ user_profile.profile_photo.url }}">
+        {% endif %}
+        <br>
+
+
+    </div>
+</div>

@@ -1,0 +1,160 @@
+{% extends 'GAMS_webapp/frameA.html' %}
+
+{% block content %}
+    {% load staticfiles %}
+
+{# Nav Bar #}
+<nav id="MagicMenu" class="navlanding navbar fixed-top navbar-expand-sm">
+
+        <a href=""><h4 class="navbar-brand text-orange">
+            <i class="fa fa-pencil"></i>&nbsp;Academia</h4></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="text-muted">...</span>
+        </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="navbar-nav ml-auto">
+            <a class="nav-item btn btn-link text-warning text-right" href="{% url 'user_signup' %}">
+                <i class="fa fa-plus"></i>&nbsp;sign-up</a>
+            <a class="nav-item btn btn-link text-white text-right" href="{% url 'user_login' %}">
+                <i class="fa fa-sign-in"></i>&nbsp;log-in</a>
+    </div>
+    </div>
+
+</nav>
+
+{# header block  #}
+<div class="top-bg">
+    <div class="title-block container">
+        <div class="row">
+            <div class="col-sm-3">
+
+            </div>
+            <div class="col-sm-6">
+                <div class="border-white bg-blur text-center">
+                <br>
+                <h1 class="text-orange text-center text-title">Academia</h1>
+                <h5 class="text-white">
+                    Student Grading and Attendance Monitoring System
+                </h5>
+            <br>
+        </div>
+            </div>
+            <div class="col-sm-3">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{# block 2  #}
+<div class="block-two container">
+<div class="container-fluid">
+    <h1 class="text-center"><b>Complete Control Over Records</b></h1><br>
+<div class="row">
+    <div class="col-sm-5">
+        <div class="container">
+            <h4 class="text-secondary">
+                Academia grants you the ability to manage class workarounds efficiently
+                with just some couple of clicks and scroll
+            </h4>
+        </div>
+    </div>
+    <div class="col-sm-7 text-center">
+            <img class="img-fluid img-responsive"
+                 id="block-two-img" src="{% static 'GAMS_webapp/websitephotos/control.png' %}">
+    </div>
+</div>
+    <br><br>
+</div>
+</div>
+
+
+{# block 3  #}
+<div class="block-three container">
+<div class="container-fluid">
+    <h1 class="text-left"><b>Quick Attendance Recording</b></h1><br>
+<div class="row">
+    <div class="col-sm-7">
+            <img class="img-fluid img-responsive"
+                 id="block-three-img" src="{% static 'GAMS_webapp/websitephotos/attendance.png' %}">
+    </div>
+    <div class="col-sm-5">
+        <div class="container">
+            <h4 class="text-secondary">
+                We provide the quickest way of handling attendance roll-call
+                with the help of our attendance management feature.
+            </h4>
+        </div>
+    </div>
+</div>
+    <br><br>
+</div>
+</div>
+
+
+{# block 3  #}
+<div class="block-four container">
+<div class="container-fluid">
+    <h1 class="text-right"><b>Clarity for Audiences</b></h1><br>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="container">
+            <h4 class="text-secondary">
+                Real time notifications through SMS sending and comprehensive information
+                reports through distributed variety of portals per user type.
+            </h4>
+        </div>
+    </div>
+    <div class="col-sm-6 text-center">
+            <img class="img-fluid img-responsive"
+                 id="block-three-img" src="{% static 'GAMS_webapp/websitephotos/teacherstudent.jpg' %}">
+    </div>
+</div>
+    <br><br>
+</div>
+</div>
+
+    <br><br><br>
+
+
+{#  footer  #}
+<footer class="footer">
+<div class="container">
+    <div class="row footer-content">
+        <div class="col-lg-8">
+            <h6 class="text-white"><i class="fa fa-phone"></i>&nbsp;contact us</h6>
+            <h6 class="text-secondary"><i class="fa fa-mobile-phone"></i>&nbsp;093403294023</h6>
+            <h6 class="text-secondary"><i class="fa fa-envelope"></i>&nbsp;school_email@gmail.com</h6>
+            <h6 class="text-secondary">
+                <i class="fa fa-address-card"></i>&nbsp;school_address, street 101, fucking shit</h6><br>
+        </div>
+        <div class="col-lg-4">
+
+            <a href="">
+                <h6 class="text-secondary btn-link"><i class="fa fa-facebook-official text-blue">
+                </i>&nbsp;facebook.com/fbaccountblablabla.75</h6></a>
+            <a href="#">
+                <h6 class="text-secondary btn-link"><i class="fa fa-info text-secondary">
+                </i>&nbsp;Privacy Policy</h6></a>
+            <h6 class="text-orange"><i class="fa fa-copyright"></i>
+                copyrights reserved {% now 'Y' %}</h6>
+
+            <br>
+        </div>
+    </div>
+</div>
+</footer>
+
+
+<div id="cookieConsent">
+    <div id="closeCookieConsent">x</div>
+    This website is using cookies because it will not work without them.
+    By using our site, it means that you accept these.<a class="cookieConsentOK">Accept</a>
+</div>
+
+
+{% endblock %}

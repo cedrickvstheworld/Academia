@@ -1,0 +1,65 @@
+{% extends 'GAMS_webapp/mainframe.html' %}
+{% load staticfiles %}
+
+        {% block nav_addons %}
+            {% if userext.user_type == 'instructor' %}
+                {% include 'GAMS_webapp/nav_addons_instructor.html' %}
+            {% endif %}
+        {% endblock %}
+
+{% block content %}
+    {% if userext.user_type == 'instructor' or userext.user_type == 'student' %}
+        {% if error %}
+            <h1 class="text-danger">{{ error }}</h1>
+        {% else %}
+        <div class="row">
+                <div class="col-lg-12">
+                   <h1 class="page-header text-capitalize">
+                       {{ parent_object.first_name }} {{ parent_object.middle_name }} {{ parent_object.last_name }}<br>
+                   <span class="small text-uppercase">{{ formatted_id }}</span>
+                   </h1>
+                   <h3 class="text-info text-capitalize">{{ parent_object.user_type }}</h3>
+                </div>
+        </div>
+
+        <div class="row">
+               <div class="col-sm-3">
+                    {% if parent_object.profile_photo == null or parent_object.profile_photo == '' %}
+                        {% if profile_object.gender == 'male' %}
+                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/boyprofile.png' %}">
+                        {% else %}
+                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/girlprofile.png' %}">
+                        {% endif %}
+                    {% else %}
+                        <img class="profile-img img-rounded" src="{{ profile_object.profile_photo.url }}">
+                    {% endif %}
+                    <br>
+
+               </div>
+
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="text-red page-header">Profile Information</h3>
+
+                        <h4><label>Course:</label> {{ parent_object.course }}</h4>
+
+                        <h4><label>Gender:</label> {{ parent_profile.gender }}</h4>
+
+                        <h4><label>Address:</label> {{ parent_profile.address }}</h4>
+
+                        <h4><label>Birthday:</label> {{ parent_profile.birthday }}</h4>
+
+                        <h4><label>Contact No. :</label> {{ parent_profile.contact_number }}</h4>
+
+                        <h4><label>Guardian's Contact No. :</label> {{ parent_profile.guardian_contact_number }}</h4>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'GAMS_webapp/mainframe.html' %}
+{% load staticfiles %}
+
+        {% block nav_addons %}
+            {% if userext.user_type == 'instructor' %}
+                {% include 'GAMS_webapp/nav_addons_instructor.html' %}
+            {% endif %}
+        {% endblock %}
+
+{% block content %}
+
+           <div class="row">
+                <div class="col-lg-12">
+                   <h1 class="page-header text-capitalize">
+                       {{ userext.first_name }} {{ userext.middle_name }} {{ userext.last_name }}<br>
+                   <span class="small text-uppercase">{{ formatted_id }}</span>
+                   </h1>
+                   <h3 class="text-info text-capitalize">{{ userext.user_type }}</h3>
+                </div>
+           </div>
+
+<div class="row">
+<div class="col-sm-3">
+
+    {% if profile.profile_photo == null or profile.profile_photo == '' %}
+        {% if profile.gender == 'male' %}
+            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/boyprofile.png' %}">
+        {% else %}
+            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/girlprofile.png' %}">
+        {% endif %}
+    {% else %}
+        <img class="profile-img img-rounded" src="{{ profile.profile_photo.url }}">
+    {% endif %}
+    <br>
+    <form method="post" enctype="multipart/form-data" action="{% url 'update_photo' %}">
+        {% csrf_token %}
+        <br>
+        <h5 class="text-secondary"><b>Change Profile Photo:</b></h5>
+        <input class="form-control-sm input-length-md text-secondary" type="file" name="picture" required><br>
+        <input type="submit" class="btn btn-info" value="Update Profile Photo"><br><br>
+        {% if response == 'invalid image format'%}
+            <script>
+                document.write('<div class="alert alert-danger">{{ response }}</div>');
+            </script>
+        {% endif %}
+    </form>
+
+
+
+</div>
+
+<div class="col-sm-9">
+<div class="row">
+<form method="post" action="{% url 'profile_update' %}">
+{% csrf_token %}
+            <h3 class="text-red page-header">Profile Information</h3>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <h4><label for="fname">First Name :</label>
+                            <input type="text" class="letters form-control"
+                               name="fname" id="fname"
+                               value="{{ userext.first_name }}" required>
+                            </h4>
+                    </div>
+
+                    <div class="form-group">
+                        <h4><label for="mname">Middle Name :</label>
+                            <input type="text" class="letters form-control"
+                               name="mname" id="mname"
+                               value="{{ userext.middle_name }}" required>
+                            </h4>
+                    </div>
+
+                    <div class="form-group">
+                        <h4><label for="lname">Last Name :</label>
+                            <input type="text" class="letters form-control"
+                               name="lname" id="lname"
+                               value="{{ userext.last_name }}" required>
+                            </h4>
+                    </div>
+
+                    <h4><label>Username: </label> {{ user_object.username }}</h4>
+
+                    <div class="form-group">
+                        <div class="form-select">
+                        <h4><label for="course">Course:</label>
+
+                            <select class="form-control" name="course" id="course">
+                                <option value="Diverse">Diverse</option>
+                                <option value="Computer Related">Computer Related</option>
+                                <option value="Criminology">Criminology</option>
+                                <option value="Education Related">Education Related</option>
+                                <option value="Marketing and Business Related">Marketing and Business Related</option>
+                            </select></h4>
+                        </div>
+                    </div>
+
+                        <div class="form-radio">
+                            <h4><label>Gender: </label>
+                                <input type="radio" name="gender" value="male" id="male" checked>
+                                <label for="male" class="text-info">Male</label>
+                                <span class="check"></span>
+                                <input type="radio" name="gender" value="female" id="female">
+                                <label for="female" class="text-danger">Female</label>
+                                <span class="check"></span></h4>
+                        </div>
+
+                    <div class="form-group">
+                            <h4><label for="address">Address:</label>
+                                <input class="form-control" type="text" name="address"
+                                       id="address" value="{{ profile.address }}" required/>
+                            </h4>
+                    </div>
+
+
+                    <div class="form-group">
+                            <h4><label for="birthday">Birthday:</label></h4>
+                                <input type="date" value="{{ profile.birthday }}" class="form-control-sm"
+                                       name="birthday" id="birthday"/>
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <h4><label for="email">Gmail :</label>
+                            <input type="email" class="form-control"
+                               name="email" id="email"
+                               value="{{ user_object.email }}" required>
+                            </h4>
+                    </div>
+
+                    <div class="form-group">
+                            <h4><label for="contact_number">Contact No. :</label>
+                            <input type="text" class="integers form-control"
+                               name="contact_number" id="contact_number"
+                               pattern="^9(?!(000000000))\d{9}$"
+                               value="{{ profile.contact_number }}" required>
+                            </h4>
+                    </div>
+
+                    <div class="form-group">
+                        <h4><label for="guardian_contact_number">Guardian's Contact No. :</label>
+                            <input type="text" class="integers form-control"
+                               name="guardian_contact_number" id="guardian_contact_number"
+                               pattern="^9(?!(000000000))\d{9}$"
+                               value="{{ profile.guardian_contact_number }}" required>
+                            </h4>
+                    </div>
+
+                    <input type="submit" class="btn btn-success" value="Update Profile Information">
+
+                    {% if response%}
+                        <br><br>
+                        {% if response == 'ok' %}
+                        <script>
+                                document.write('<div class="alert alert-success">Profile information was updated</div>');
+                        </script>
+                        {% elif response == 'Invalid Age' %}
+                        <script>
+                                document.write('<div class="alert alert-danger">{{ response }}</div>');
+                        </script>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+
+</form>
+</div>
+
+</div>
+
+</div>
+<br><br>
+
+
+{% endblock %}

@@ -1,0 +1,89 @@
+<div class="col-sm-4">
+    <h2 class="text-success">Join a Class</h2>
+    <form method="post" id="join_class" action="{% url 'join_class' %}">
+    {% csrf_token %}
+        <label for="class_code">Class Code</label>
+        <input type="text" class="form-control" name="class_code" id="class_code" placeholder="Class Code" required/>
+        <h5 class="text-orange">Note: Ask your instructor for the class code of his/her class then wait for
+        your request to be verified.</h5>
+        {% if response %}
+
+            {% if response == 'ok' %}
+            <script>
+                  document.write('<div class="alert alert-success text-center">Request was sent.</div>');
+            </script>
+            {% else %}
+            <script>
+                  document.write('<div class="alert alert-danger text-center">{{ response }}</div>');
+            </script>
+            {% endif %}
+        {% endif %}
+        <div class="text-right">
+            <input type="submit" class="btn btn-success" value="Submit Request">
+        </div>
+    </form>
+</div>
+
+<div class="col-sm-8">
+    <h2 class="text-success">My Classes</h2>
+       <div class="panel panel-default">
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Class Code</th>
+                                        <th>Name</th>
+                                        <th>Instructor</th>
+                                        <th>Join Request Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in classes_objects %}
+                                    <tr>
+                                        <td>{{ i.class_code }}</td>
+                                        <td>
+                                        <b>
+                                            {% if i.verified %}
+                                                <a href="/class_student_view/{{ i.class_code }}/"
+                                                   class="btn-link text-success"><span>{{ i.schclass_name }}</span></a>
+                                            {% else %}
+                                                <span class="text-danger">{{ i.schclass_name }}</span>
+                                            {% endif %}
+                                        </b>
+                                        </td>
+                                        <td class="text-capitalize">{{ i.instructor_name }}</td>
+                                        <td>
+                                        <b>
+                                            {% if i.is_approved %}
+                                                <span class="text-success">approved</span>
+                                            {% else %}
+                                                <span class="text-danger">pending</span>
+                                            {% endif %}
+                                        </b>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h3 class="text-success page-header">Who Are Monitoring Me?</h3>
+                        <ul class="list-group">
+                            {% for i in parents_objects %}
+                                <li class="list-group-item">
+                                <span>{{ i.formatted_id_parent }}</span> -
+                                <a class="text-info text-capitalize" href="/parent_profile/{{ i.parent.id }}/">
+                                    {{ i.parent.first_name }}
+                                    {{ i.parent.middle_name }}
+                                    {{ i.parent.last_name }}
+                                </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+</div>

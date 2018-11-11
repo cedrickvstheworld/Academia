@@ -1,0 +1,31 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.landing_page, name='landingpage'),
+    path('login/', views.user_login, name='user_login'),
+    path('logout/', views.user_logout, name='user_logout'),
+    path('sign_up/', views.register_user, name='user_signup'),
+    path('index/', views.index, name='index'),
+    path('create_class/', views.create_class, name='create_class'),
+    path('join_class/', views.student_join_class, name='join_class'),
+    path('request_pending/', views.student_pending_request, name='request_pending'),
+    path('request_delete/', views.delete_student_request, name='request_delete'),
+    path('request_accept/', views.accept_student_request, name='request_accept'),
+    path('class_instructor_view/<class_code>/', views.class_instructor_view, name='class_instructor_view'),
+    path('class_student_view/<class_code>/', views.class_student_view, name='class_student_view'),
+    path('instructor_profile/<class_code>/<user_id>/', views.instructor_profile_view, name='instructor_profile_view'),
+    path('record_attendance/', views.record_attendance, name='record_attendance'),
+    path('profile/', views.profile_view, name='profile_view'),
+    path('update_photo/', views.update_photo, name='update_photo'),
+    path('profile_update/', views.update_profile, name='profile_update'),
+    path('class_instructor_view/<class_code>/<user_id>/', views.student_profile_instructor_view,
+         name='student_profile_instructor_view'),
+    path('record_grade/', views.student_submit_grade, name='record_grade'),
+    path('monitor_student/', views.student_monitor_request, name='monitor_student'),
+    path('monitor_requests_pending/', views.monitor_pending_request, name='monitor_requests_pending'),
+    path('monitor_requests_delete/', views.delete_student_monitor_request, name='monitor_requests_delete'),
+    path('monitor_requests_accept/', views.accept_student_monitor_request, name='monitor_requests_accept'),
+    path('class_parent_view/<class_code>/<student_id>/', views.class_parent_view, name='class_parent_view'),
+    path('parent_profile/<parent_id>/', views.parent_profile_view, name='parent_profile_view'),
+]

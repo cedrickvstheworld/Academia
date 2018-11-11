@@ -1,0 +1,97 @@
+    <div class="col-sm-4">
+        <h2 class="text-success">Create a Class</h2>
+
+
+        <form id="create_class" method="post" action="{% url 'create_class' %}">
+            {% csrf_token %}
+            <label for="course">Course</label>
+            <select class="form-control" name="course" id="course">
+                <option value="Computer Related">Computer Related</option>
+                <option value="Criminology">Criminology</option>
+                <option value="Education Related">Education Related</option>
+                <option value="Marketing and Business Related">Marketing and Business Related</option>
+            </select>
+            <br>
+            <label for="class_name">Class Name</label>
+            <input class="form-control" type="text" name="class_name" id="class_name" placeholder="Class Name" required/>
+            <br>
+            <div class="form-group">
+                <label for="year-level">Year-Level</label>
+                    <select class="input-sm" name="year_level" id="year_level">
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="V">V</option>
+                    </select>&nbsp;
+                <label for="section">Section</label>
+                    <select class="input-sm" name="section" id="section">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+            </div>
+            <h5 class="text-orange">Note: Class must be verified by the administrator before it can operate.</h5>
+            {% if response %}
+            <script>
+                  document.write('<div class="alert alert-danger text-center">{{ response }}</div>');
+            </script>
+            {% endif %}
+            <div class="text-right">
+            <input type="submit" class="btn btn-success" value="Submit Request"/>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="col-lg-8">
+        <h2 class="text-success">My Classes</h2>
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Class Code</th>
+                                        <th>Name</th>
+                                        <th>Course</th>
+                                        <th>Year-Level</th>
+                                        <th>Section</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in class_list %}
+                                    <tr>
+                                        <td>{{ i.class_code }}</td>
+                                        <td>
+                                        <b>
+                                            {% if i.verified %}
+                                                <a href="/class_instructor_view/{{ i.class_code }}/" class="text-success">
+                                                    <span>{{ i.schclass_name }}</span></a>
+                                            {% else %}
+                                                <span class="text-danger">{{ i.schclass_name }}</span>
+                                            {% endif %}
+                                        </b>
+                                        </td>
+                                        <td>{{ i.course }}</td>
+                                        <td>{{ i.class_year }}</td>
+                                        <td>{{ i.section }}</td>
+                                        <td>
+                                        <b>
+                                            {% if i.verified %}
+                                                <span class="text-success">Verified</span>
+                                            {% else %}
+                                                <span class="text-danger">Pending</span>
+                                            {% endif %}
+                                        </b>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+    </div>

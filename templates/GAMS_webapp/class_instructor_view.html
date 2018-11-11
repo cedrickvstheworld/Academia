@@ -1,0 +1,247 @@
+{% extends 'GAMS_webapp/mainframe.html' %}
+{% load staticfiles %}
+
+        {% block nav_addons %}
+            {% if userext.user_type == 'instructor' %}
+                {% include 'GAMS_webapp/nav_addons_instructor.html' %}
+            {% endif %}
+        {% endblock %}
+
+{% block content %}
+    {% if userext.user_type == 'instructor' %}
+        {% if error %}
+            <h1 class="text-danger">{{ error }}</h1>
+        {% else %}
+            <div class="row">
+            <div class="col-sm-12">
+    <div class="col-lg-12">
+       <h1 class="page-header text-capitalize">{{ class_object.schclass_name }}
+       </h1>
+        <h4 class=""><b>Course:</b> <span class="text-success">{{ class_object.course }}</span></h4>
+        <h4 class=""><b>Class Code:</b> <span class="text-success">{{ class_object.class_code }}</span></h4>
+        <h4 class=""><b>Year and Section:</b>
+            <span class="text-success">{{ class_object.class_year }}-{{ class_object.section }}</span></h4>
+        <h4><b>Date Created:</b> <span class="text-success">{{ class_object.date_created }}</span></h4>
+    </div>
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="col-lg-6">
+            <form method="post" action="{% url 'record_attendance' %}">
+            {% csrf_token %}
+        <div class="panel panel-red">
+        <div class="panel-heading">
+            <h4>Record Attendance</h4>
+        </div>
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th>Is Present?</th>
+                                        <th>remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in student_object %}
+
+                                    <tr>
+                                        <td>{{ i.formatted_id}}</td>
+                                        <td class="text-capitalize">
+                                            <a href="/class_instructor_view/{{ class_object.class_code }}/{{ i.id }}/" class="text-info">
+                                            {{ i.first_name }}
+                                            {{ i.middle_name }}
+                                            {{ i.last_name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="is_present"
+                                                   name="is_present" value="{{ i.id }}"/>
+                                            <span class="text-success">Present</span><br>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" id="is_late"
+                                                   name="is_late" value="{{ i.id }}"/>
+                                            <span class="text-success">Late</span><br>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+        <div class="panel-footer text-right">
+
+            {% if response %}
+            <script>
+                  document.write('<div class="alert alert-success text-center">{{ response }}</div>');
+            </script>
+            {% endif %}
+
+            <input type="hidden" name="class_code" value="{{ class_object.class_code }}">
+            <input type="hidden" name="class_id" value="{{ class_object.id }}">
+            <input type="submit" class="btn btn-success" value="Save Record">
+        </div>
+                    </div>
+            </form>
+            </div>
+
+       <div class="col-lg-6">
+        <div class="panel panel-green">
+        <div class="panel-heading">
+            <h4>Student Attendance History</h4>
+        </div>
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example2">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th>Status</th>
+                                        <th>Attendance Date-Time</th>
+                                        <th>Remarks</th>
+                                        <th>Attendance ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in attendance_object %}
+
+                                    <tr>
+                                        <td>{{ i.formatted_student_id}}</td>
+                                        <td class="text-capitalize">
+                                            <a href="/class_instructor_view/{{ class_object.class_code }}/{{ i.student.id }}/" class="text-info">
+                                            {{ i.student.first_name }}
+                                            {{ i.student.middle_name }}
+                                            {{ i.student.last_name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {% if i.is_present %}
+                                                <span class="text-success">Present</span>
+                                            {% else %}
+                                                <span class="text-danger">Absent</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ i.formatted_datetime }}</td>
+                                        <td>{{ i.remarks }}</td>
+                                        <td>{{ i.id }}</td>
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+            </div>
+
+            <div class="row">
+            <div class="col-sm-12">
+     <div class="panel panel-yellow">
+        <div class="panel-heading">
+            <h4>Student List</h4>
+        </div>
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-hover" id="dataTables-example3">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th>Profile Photo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in student_object %}
+
+                                    <tr>
+                                        <td><h4>{{ i.formatted_id}}</h4></td>
+                                        <td class="text-capitalize"><h4>
+                                            <a href="/class_instructor_view/{{ class_object.class_code }}/{{ i.id }}/" class="text-info">
+                                            {{ i.first_name }}
+                                            {{ i.middle_name }}
+                                            {{ i.last_name }}
+                                            </a></h4>
+                                        </td>
+                                        <td>
+                                    {% if i.profile.profile_photo == null or i.profile.profile_photo == '' %}
+                                        {% if i.profile.gender == 'male' %}
+                                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/boyprofile.png' %}">
+                                        {% else %}
+                                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/girlprofile.png' %}">
+                                        {% endif %}
+                                    {% else %}
+                                        <img class="profile-img img-rounded" src="{{ i.profile.profile_photo.url }}">
+                                    {% endif %}
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+            <div class="row">
+            <div class="col-sm-12">
+     <div class="panel panel-success">
+        <div class="panel-heading">
+            <h4>Student's Grade Records</h4>
+        </div>
+
+                        <div class="panel-body">
+        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example4">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th>Equivalent</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in class_grades %}
+
+                                    <tr>
+                                        <td>{{ i.formatted_student_id }}</td>
+                                        <td class="text-capitalize">
+                                            <a href="/class_instructor_view/{{ class_object.class_code }}/{{ i.student.id }}/" class="text-info">
+                                            {{ i.student.first_name }}
+                                            {{ i.student.middle_name }}
+                                            {{ i.student.last_name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ i.equivalent }}</td>
+                                        <td>
+                                            {% if i.remarks == 'passed' %}
+                                                <b class="text-success text-capitalize"> {{ i.remarks }}</b>
+                                            {% elif i.remarks == 'failed' %}
+                                                <b class="text-danger text-capitalize"> {{ i.remarks }}</b>
+                                            {% elif i.remarks == 'incomplete' %}
+                                                <b class="text-warning text-capitalize"> {{ i.remarks }}</b>
+                                            {% elif i.remarks == 'None' %}
+                                                <b class="text-warning text-capitalize"> {{ i.remarks }}</b>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+
+        {% endif %}
+
+    {% endif %}
+{% endblock %}

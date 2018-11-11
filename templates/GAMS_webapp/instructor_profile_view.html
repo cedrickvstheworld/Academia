@@ -1,0 +1,75 @@
+{% extends 'GAMS_webapp/mainframe.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% if session_user.user_type == 'student' or session_user.user_type == 'parent' %}
+        {% if error %}
+            <h1 class="text-danger">{{ error }}</h1>
+        {% else %}
+        <div class="row">
+                <div class="col-lg-12">
+                   <h1 class="page-header text-capitalize">
+                       {{ instructor_object.first_name }} {{ instructor_object.middle_name }} {{ instructor_object.last_name }}<br>
+                   <span class="small text-uppercase">{{ formatted_id }}</span>
+                   </h1>
+                   <h3 class="text-info text-capitalize">{{ instructor_object.user_type }}</h3>
+                </div>
+        </div>
+
+        <div class="row">
+               <div class="col-sm-3">
+                    {% if profile_object.profile_photo == null or profile_object.profile_photo == '' %}
+                        {% if profile_object.gender == 'male' %}
+                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/boyprofile.png' %}">
+                        {% else %}
+                            <img class="profile-img img-rounded" src="{% static 'GAMS_webapp/websitephotos/girlprofile.png' %}">
+                        {% endif %}
+                    {% else %}
+                        <img class="profile-img img-rounded" src="{{ profile_object.profile_photo.url }}">
+                    {% endif %}
+                    <br>
+
+               </div>
+
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="text-red page-header">Profile Information</h3>
+
+                        <h4><label>Course:</label> {{ instructor_object.course }}</h4>
+
+                        <h4><label>Gender:</label> {{ profile_object.gender }}</h4>
+
+                        <h4><label>Address:</label> {{ profile_object.address }}</h4>
+
+                        <h4><label>Birthday:</label> {{ profile_object.birthday }}</h4>
+
+                        <h4><label>Contact No. :</label> {{ profile_object.contact_number }}</h4>
+
+                        <h4><label>Guardian's Contact No. :</label> {{ profile_object.guardian_contact_number }}</h4>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <h3 class="text-red page-header">Class List</h3>
+                        <div class="class_lists">
+                            <ul class="list-group">
+                                {% for i in class_objects %}
+                                    <li class="list-group-item">{{ i.class_code }}
+                                        <b>{{ i.schclass_name }}</b>:
+                                        {{ i.course }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        {% endif %}
+    {% endif %}
+{% endblock %}
