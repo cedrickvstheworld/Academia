@@ -454,8 +454,11 @@ def class_student_view(request, class_code):
             i.formatted_datetime = i.attendance_datetime.astimezone(timezone_PH).strftime("%B %d, %Y - %I:%M:%S %p")
         context['attendance_objects'] = attendance_objects
 
-        grade_object = Grades.objects.get(Q(student=userext_object) & Q(schclass=class_object))
-        context['grade_object'] = grade_object
+        try:
+            grade_object = Grades.objects.get(Q(student=userext_object) & Q(schclass=class_object))
+            context['grade_object'] = grade_object
+        except Grades.DoesNotExist:
+            context['grade_object'] = []
 
     except:
         context['error'] = 'This class doesn\'t exists or is not yet verified'
@@ -538,8 +541,8 @@ def record_attendance(request):
 
             parent_monitored = ParentMonitor.objects.filter(Q(student=i) & Q(schclass=class_object) & Q(verified=True))
 
-            for i in parent_monitored:
-                parent_profile = UserProfile.objects.get(user=i.parent)
+            for ii in parent_monitored:
+                parent_profile = UserProfile.objects.get(user=ii.parent)
                 if parent_profile.contact_number != profile.guardian_contact_number:
                     msg_dict_parent = {
                         'msg': i.first_name + ' is present now in ' + class_object.schclass_name,
@@ -570,8 +573,8 @@ def record_attendance(request):
 
             parent_monitored = ParentMonitor.objects.filter(Q(student=i) & Q(schclass=class_object) & Q(verified=True))
 
-            for i in parent_monitored:
-                parent_profile = UserProfile.objects.get(user=i.parent)
+            for ii in parent_monitored:
+                parent_profile = UserProfile.objects.get(user=ii.parent)
                 if parent_profile.contact_number != profile.guardian_contact_number:
                     msg_dict_parent = {
                         'msg': i.first_name + ' is absent now in ' + class_object.schclass_name,
@@ -843,8 +846,12 @@ def class_parent_view(request, class_code, student_id):
             i.formatted_datetime = i.attendance_datetime.astimezone(timezone_PH).strftime("%B %d, %Y - %I:%M:%S %p")
         context['attendance_objects'] = attendance_objects
 
-        grade_object = Grades.objects.get(Q(student=student_object) & Q(schclass=class_object))
-        context['grade_object'] = grade_object
+
+        try:
+            grade_object = Grades.objects.get(Q(student=student_object) & Q(schclass=class_object))
+            context['grade_object'] = grade_object
+        except Grades.DoesNotExist:
+            context['grade_object'] = []
 
     except UserExt.DoesNotExist:
         context['error'] = 'the student is not yet joining ' \
